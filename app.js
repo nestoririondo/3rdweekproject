@@ -20,11 +20,14 @@ const deleteTask = (event) => {
 }
 
 completeTask = (event) => {
+    console.log(event.target)
     const idToComplete = event.target.parentElement.id;
-    let items = JSON.parse(localStorage.getItem("items"));
     // toggle completed class to the task item
     const taskItem = document.getElementById(idToComplete).querySelector('span');
     taskItem.classList.toggle('completed');
+    // toggle checked image
+    const checkbox = document.getElementById(idToComplete).querySelector('img');
+    checkbox.src = checkbox.src.includes('unchecked') ? 'images/checked.svg' : 'images/unchecked.svg';
 }
 
 
@@ -33,15 +36,17 @@ const addTaskToList = (task) => {
     taskItem.classList.add('taskItem');
     taskItem.setAttribute('id', task.id);
     taskItem.innerHTML = `
-        <input type="checkbox" class="checkbox">
+        <img src='images/unchecked.svg' class="checkbox"></img>
         <span>${task.text}</span>
-        <button class="deleteButton">Delete</button>
+        <img src='images/trashcan.svg' class="trashcan"></img>
     `;
     taskList.appendChild(taskItem);
-    const deleteButton = taskItem.querySelector('.deleteButton');
-    deleteButton.addEventListener('click', deleteTask);
+    
     const checkbox = taskItem.querySelector('.checkbox');
-    checkbox.addEventListener('change', completeTask);
+    checkbox.addEventListener('click', completeTask);
+
+    const trashcan = taskItem.querySelector('.trashcan');
+    trashcan.addEventListener('click', deleteTask);
 }
 
 const addTask = (event) => {
@@ -56,6 +61,7 @@ const addTask = (event) => {
         text: taskText,
         id: id
     };
+
     let items = [];
     if (localStorage.getItem("items")) {
         items = JSON.parse(localStorage.getItem("items"));
