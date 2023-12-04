@@ -1,4 +1,68 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html {
+    font-family: 'Caveat', cursive;
+}
+.container {
+    border: 2px solid black;
+    max-width: 500px;
+    gap: 1rem;
+    margin: 5rem auto;
+}
+
+#form {
+    padding: 1rem;
+    display: flex;
+}
+#inputField {
+    padding: 1rem;
+    font-size: 1.5rem;
+    border: none;
+    border-bottom: 2px solid black;
+    outline: none;
+    font-family: 'Caveat', cursive;
+}
+#addButton {
+    flex: 1;
+    padding: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+
+}
+
+li {
+    padding: 1rem;
+    font-size: 1.5rem;
+    border-bottom: 1px solid black;
+}
 .completed {
     text-decoration: line-through;
     color: grey;
+}
+li {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.checkbox {
+    width: 30px;
+    height: 30px;
+}
+.checkbox:hover {
+    cursor: pointer;
+}
+
+.trashcan {
+    width: 20px;
+    height: 20px;
+    opacity: 0.6;
+    cursor: pointer;
+    margin-left: auto;
 }
