@@ -3,6 +3,7 @@ const addButton = document.getElementById('addButton');
 const inputField = document.getElementById('inputField');
 const taskList = document.getElementById('taskList');
 const clearAllButton = document.getElementById('clearAllButton');
+const clearCompletedButton = document.getElementById('clearCompletedButton');
 
 
 const deleteTask = (event) => {
@@ -28,7 +29,7 @@ const completeTask = (event) => {
     console.log(event.target)
     const idToComplete = event.target.parentElement.id; // tomamos el id del padre del img, que es un li
 
-    // document.getElementById(idToComplete).classList.toggle('checked');
+    document.getElementById(idToComplete).classList.toggle('checked');
 
 
     let items = JSON.parse(localStorage.getItem("items"));
@@ -134,3 +135,16 @@ clearAllButton.addEventListener('click', () => {
     localStorage.clear();
     taskList.innerHTML = '';
 })
+
+//here comes the clear all completed tasks button and its functions
+
+const clearCompletedTasks = () => { 
+    const checkedTasks = document.querySelectorAll('.checked'); 
+    checkedTasks.forEach(task => { 
+        task.remove();
+    })
+}
+
+
+clearCompletedButton.addEventListener('click', clearCompletedTasks); 
+
