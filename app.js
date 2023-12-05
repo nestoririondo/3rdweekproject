@@ -4,6 +4,32 @@ const inputField = document.getElementById('inputField');
 const taskList = document.getElementById('taskList');
 const clearAllButton = document.getElementById('clearAllButton');
 
+const clickStar = (event) => {
+    const idToStar = event.target.parentElement.id; // tomamos el id del padre del img, que es un li
+
+    let items = JSON.parse(localStorage.getItem("items"));
+    // find the index of the item we want to update
+    const index = items.findIndex(item => item.id == idToStar);
+    // update the item
+    items[index].important = !items[index].important; // if it's true, make it false, if it's false, make it true\
+
+    // save the updated items to local storage
+    localStorage.setItem("items", JSON.stringify(items));
+
+    // toggle icon
+    const star = document.getElementById(idToStar).querySelector('.star');
+    star.src = star.src.includes('starEmpty') ? 'images/starFull.png' : 'images/starEmpty.png';
+
+    // toggle class
+    star.classList.toggle('important'); // esto es para darle opacity 1 o 0.5
+
+    // put li element with star on top of the list
+    
+
+
+}
+
+
 const editTask = (event) => {
     const spanToEdit = event.target.parentElement.children[1];
     const originalText = spanToEdit.innerHTML
@@ -48,14 +74,14 @@ const editTask = (event) => {
                 itemsArr[index].text = newTaskText;
                 localStorage.setItem("items", JSON.stringify(itemsArr));
 
-                editIcon = event.target.parentElement.children[2];
+                editIcon = event.target.parentElement.children[3];
                 editIcon.src = 'images/edit.png' // toggle icon
 
             } else if (event.key === 'Escape') { // Escape brings back the original text, nothing is saved
                 spanToEdit.innerText = originalText
                 spanToEdit.setAttribute('contenteditable', false);
                 event.target.blur();
-                editIcon = event.target.parentElement.children[2];
+                editIcon = event.target.parentElement.children[3];
                 editIcon.src = 'images/edit.png' // toggle icon
             }
         });
@@ -70,7 +96,7 @@ const deleteTask = (event) => {
     // filter items to remove the one with the id we want to delete
     itemsArr = itemsArr.filter(algo => algo.id != idToDelete); // filter devuelve un nuevo array con los elementos que cumplen la condicion
 
-    // items contiene todos los elementos menos el que queremos borrar
+    // itemsArr contiene todos los elementos menos el que queremos borrar
 
     // save the remaining items to local storage
     localStorage.setItem("items", JSON.stringify(itemsArr));
@@ -124,6 +150,7 @@ const addTaskToList = (task) => {
     taskItem.innerHTML = `
         <img src='images/unchecked.png' class="checkbox"></img>
         <span class="task-text">${task.text}</span>
+        <img src='images/starEmpty.png' class="star"></img>
         <img src='images/edit.png' class="edit"></img>
         <img src='images/trashcan.png' class="trashcan"></img>
     `;
@@ -135,6 +162,9 @@ const addTaskToList = (task) => {
     const edit = taskItem.querySelector('.edit');
     edit.addEventListener('click', editTask);
 
+    const star = taskItem.querySelector('.star');
+    star.addEventListener('click', clickStar);
+
     const trashcan = taskItem.querySelector('.trashcan');
     trashcan.addEventListener('click', deleteTask);
 
@@ -143,6 +173,11 @@ const addTaskToList = (task) => {
         checkbox.src = 'images/checked.png';
         const taskText = taskItem.querySelector('.task-text');
         taskText.classList.add('completed');
+    }
+
+    if (task.important) {
+        star.src = 'images/starFull.png';
+        star.classList.add('important');
     }
 }
 

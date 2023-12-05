@@ -55,9 +55,8 @@ body {
 }
 #addButton:active {
     background-color: #3e8e41;
+    transform: scale()
 }
-
-
 
 li {
     display: flex;
@@ -67,6 +66,9 @@ li {
     font-size: 1.5rem;
     list-style-type: none;
     border-bottom: 1px solid black;
+}
+li:last-child {
+    border-bottom: none;
 }
 
 li span {
@@ -88,9 +90,36 @@ li span:focus {
 }
 
 .checkbox:hover {
+    width: 30px;
+    height: 30px;
     cursor: pointer;
+    background-image: url(/images/checked.png);
 }
 
+.star {
+    width: 20px;
+    height: 20px;
+    opacity: 0.6;
+    cursor: pointer;
+    margin-right: 1rem;
+    margin-bottom: 1px;
+}
+.star:hover {
+    opacity: 1;
+}
+
+.important {
+    opacity:1;
+}
+.edit {
+    width: 17px;
+    opacity: 0.6;
+    cursor: pointer;
+    margin-left: auto;
+}
+.edit:hover {
+    opacity: 1;
+}
 .trashcan {
     width: 17px;
     height: 17px;
@@ -98,9 +127,6 @@ li span:focus {
     cursor: pointer;
     margin-left: auto;
 }
-.edit {
-    width: 17px;
-    opacity: 0.6;
-    cursor: pointer;
-    margin-left: auto;
+.trashcan:hover {
+    opacity: 1;
 }
