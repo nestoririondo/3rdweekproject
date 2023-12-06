@@ -23,11 +23,16 @@ const clickStar = (event) => {
 
     // toggle class
     star.classList.toggle('important'); // esto es para darle opacity 1 o 0.5
+    star.parentElement.classList.toggle('important');
 
     // put li element with star on top of the list
-    
+    const taskItem = document.getElementById(idToStar);
+    taskList.prepend(taskItem);
 
-
+    // sort list items
+    const childrenArray = Array.from(taskList.children);
+    childrenArray.sort((a, b) => b.classList.contains('important') - a.classList.contains('important'));
+    childrenArray.forEach(item => taskList.appendChild(item));
 }
 
 
@@ -179,6 +184,8 @@ const addTaskToList = (task) => {
     if (task.important) {
         star.src = 'images/starFull.png';
         star.classList.add('important');
+        star.parentElement.classList.add('important');
+        taskList.prepend(taskItem); 
     }
 }
 
