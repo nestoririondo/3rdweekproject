@@ -4,6 +4,7 @@ const inputField = document.getElementById('inputField');
 const taskList = document.getElementById('taskList');
 const clearAllButton = document.getElementById('clearAllButton');
 const clearCompletedButton = document.getElementById('clearCompletedButton');
+const toggleButton = document.getElementById('toggle-button');
 
 const clickStar = (event) => {
     const idToStar = event.target.parentElement.id; // tomamos el id del padre del img, que es un li
@@ -138,16 +139,7 @@ const completeTask = (event) => {
     const checkbox = document.getElementById(idToComplete).querySelector('.checkbox');
 
     checkbox.src = checkbox.src.includes('unchecked') ? 'images/checked.png' : 'images/unchecked.png';
-
-    // if (checkbox.src.includes('unchecked')) {
-    //     checkbox.src = 'images/checked.png';
-    // } else {
-    //     checkbox.src = 'images/unchecked.png';
-    // }
-
-    // document.getElementById(idToComplete).classList.toggle('checked');
 }
-
 
 const addTaskToList = (task) => {
     const taskItem = document.createElement('li'); // <li class='taskItem'></li>
@@ -174,6 +166,8 @@ const addTaskToList = (task) => {
     const trashcan = taskItem.querySelector('.trashcan');
     trashcan.addEventListener('click', deleteTask);
 
+
+    // render checked and important tasks
     if (task.checked) {
         taskItem.classList.add('checked');
         checkbox.src = 'images/checked.png';
@@ -214,6 +208,17 @@ const addTask = (event) => {
     addTaskToList(task);
 }
 
+const clearCompletedTasks = () => {
+    const checkedTasks = document.querySelectorAll('.checked');
+    //iterate over each selected element: 
+    let itemsArr = JSON.parse(localStorage.getItem("items")); //"items" is the key for local storage
+    itemsArr = itemsArr.filter(item => item.checked === false); //filter items to remove the one with the id we want to delete
+    localStorage.setItem("items", JSON.stringify(itemsArr)); //save the remaining items to local storage
+    checkedTasks.forEach(task => task.remove());
+};
+
+// render tasks from local storage
+
 if (localStorage.getItem("items")) {
     const items = JSON.parse(localStorage.getItem("items"));
     items.forEach(cosa => {
@@ -221,23 +226,21 @@ if (localStorage.getItem("items")) {
     });
 }
 
-addButton.addEventListener('click', addTask);
+// event listeners
 
 clearAllButton.addEventListener('click', () => {
     localStorage.clear();
     taskList.innerHTML = '';
+    toggleButton.parentElement.children[1].classList.toggle('active');
+});
+
+clearCompletedButton.addEventListener('click', () => { 
+    clearCompletedTasks();
+    toggleButton.parentElement.children[1].classList.toggle('active');
 })
 
-//here comes the clear all completed tasks button and its functions
+toggleButton.addEventListener('click', () => {
+    toggleButton.parentElement.children[1].classList.toggle('active');
+});
 
-const clearCompletedTasks = () => {
-    const checkedTasks = document.querySelectorAll('.checked');
-    //iterate over each selected element: 
-    let itemsArr = JSON.parse(localStorage.getItem("items")); //"items" is the key for local storage
-    itemsArr = itemsArr.filter(item => item.checked === false); //filter items to remove the one with the id we want to delete
-    localStorage.setItem("items", JSON.stringify(itemsArr)); //save the remaining items to local storage
-    checkedTasks.forEach( task => task.remove())    
-    
-};
-
-clearCompletedButton.addEventListener('click', clearCompletedTasks);
+addButton.addEventListener('click', addTask)

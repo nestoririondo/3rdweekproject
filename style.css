@@ -55,7 +55,7 @@ body {
 }
 #addButton:active {
     background-color: #3e8e41;
-    transform: scale()
+    transform: scale(0.98);
 }
 
 li {
@@ -129,4 +129,58 @@ li span:focus {
 }
 .trashcan:hover {
     opacity: 1;
+}
+
+.extramenu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hamburger {
+    width: 30px;
+    height: 40px;
+    opacity: 0.4;
+    margin-bottom: 1rem;
+    &:hover {
+        opacity: 1;
+    }
+    &:active {  
+        transform: scale(0.98);
+    }
+}
+
+.secondcontainer {
+    display: none;
+    margin: 0 auto;
+    gap: 1rem;
+    flex-direction: column;
+}
+
+.secondcontainer button {
+    display: block;
+    height: 50px;
+    padding: 0.8rem 1rem 1rem 1rem;
+    font-size: 1.2rem;
+    font-family: 'Caveat', cursive;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    white-space: nowrap;
+    &:hover {
+        background-color: #45a049;
+    }
+    &:active {  
+        background-color: #3e8e41;
+        transform: scale(0.98);
+    }
+}
+#clearAllButton:hover {
+    background-color: darkred;
+}
+
+.secondcontainer.active {
+    display: flex;
 }
