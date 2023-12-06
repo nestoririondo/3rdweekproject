@@ -223,13 +223,14 @@ clearAllButton.addEventListener('click', () => {
 
 //here comes the clear all completed tasks button and its functions
 
-const clearCompletedTasks = () => { 
-    const checkedTasks = document.querySelectorAll('.checked'); 
-    checkedTasks.forEach(task => { 
-        task.remove();
-    })
-}
+const clearCompletedTasks = () => {
+    const checkedTasks = document.querySelectorAll('.checked');
+    //iterate over each selected element: 
+    let itemsArr = JSON.parse(localStorage.getItem("items")); //"items" is the key for local storage
+    itemsArr = itemsArr.filter(item => item.checked === false); //filter items to remove the one with the id we want to delete
+    localStorage.setItem("items", JSON.stringify(itemsArr)); //save the remaining items to local storage
+    checkedTasks.forEach( task => task.remove())    
+    
+};
 
-
-clearCompletedButton.addEventListener('click', clearCompletedTasks); 
-
+clearCompletedButton.addEventListener('click', clearCompletedTasks);
