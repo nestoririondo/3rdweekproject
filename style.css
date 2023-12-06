@@ -39,6 +39,7 @@ body {
     overflow: hidden;
 }
 #addButton {
+    visibility: hidden;
     padding: 0 0.4rem 0.3rem 0;
     font-family: 'Caveat', cursive;
     font-size: 2rem;
@@ -50,6 +51,9 @@ body {
     cursor: pointer;
     border-radius: 5px;
 }
+#addButton.visible {
+    visibility: visible;
+}
 #addButton:hover {
     background-color: #45a049;
 }
@@ -58,7 +62,7 @@ body {
     transform: scale(0.98);
 }
 
-li {
+.taskItem {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -67,16 +71,16 @@ li {
     list-style-type: none;
     border-bottom: 1px solid black;
 }
-li:last-child {
+.taskItem:last-child {
     border-bottom: none;
 }
 
-li span {
+.taskItem span {
     flex: 5;
     word-break: break-all;
 }
 
-li span:focus {
+.taskItem span:focus {
     outline: 1px solid grey;
 }
 .completed {
@@ -155,6 +159,7 @@ li span:focus {
     margin: 0 auto;
     gap: 1rem;
     flex-direction: column;
+    padding-bottom: 2rem;
 }
 
 .secondcontainer button {
