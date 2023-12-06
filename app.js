@@ -185,6 +185,7 @@ const addTaskToList = (task) => {
 
 const addTask = (event) => {
     event.preventDefault();
+    inputField.parentElement.children[1].classList.remove('visible');
 
     const taskText = inputField.value;
     if (taskText.trim() === '') {
@@ -244,3 +245,6 @@ toggleButton.addEventListener('click', () => {
 });
 
 addButton.addEventListener('click', addTask)
+inputField.addEventListener('keydown', () => {
+    inputField.parentElement.children[1].classList.add('visible');
+})
