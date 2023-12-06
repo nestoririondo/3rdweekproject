@@ -12,16 +12,24 @@
 </head>
 <body>
     <div class="outer">
-    <div class="container">
-        <form action="" id="form">
-            <input id='inputField' type="text" placeholder='add your task' autofocus >
-            <button id="addButton">+</button>
-        </form>
-        <ul id="taskList"></ul>
+        <div class="container">
+            <form action="" id="form">
+                <input id='inputField' type="text" placeholder='add task...' autofocus >
+                <button id="addButton">+</button>
+            </form>
+            <ul id="taskList"></ul>
+        </div>
     </div>
+    <div class="extramenu">
+        <a href="#" class="toggle-button" id="toggle-button">
+            <img src="images/hamburger.png" class="hamburger" id="hamburger">
+        </a>
+        <div class="secondcontainer">
+            <button id="clearCompletedButton">Clear completed</button>
+            <button id="clearAllButton">Delete all</button>
+        </div>
     </div>
-    <button id="clearAllButton">clear all</button>
-    <button id="clearCompletedButton">Clear all completed tasks</button>
+    
     <script src="app.js"></script>
 </body>
 </html>
