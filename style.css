@@ -101,6 +101,7 @@ body {
 }
 
 .star {
+    visibility: hidden;
     width: 20px;
     height: 20px;
     opacity: 0.6;
@@ -111,11 +112,15 @@ body {
 .star:hover {
     opacity: 1;
 }
+.visible {
+    visibility: visible;
+}
 
 .important {
     opacity:1;
 }
 .edit {
+    visibility: hidden; 
     width: 17px;
     opacity: 0.6;
     cursor: pointer;
@@ -125,6 +130,7 @@ body {
     opacity: 1;
 }
 .trashcan {
+    visibility: hidden;
     width: 17px;
     height: 17px;
     opacity: 0.6;
@@ -134,7 +140,9 @@ body {
 .trashcan:hover {
     opacity: 1;
 }
-
+.visible {
+    visibility: visible;
+}
 .extramenu {
     display: flex;
     flex-direction: column;

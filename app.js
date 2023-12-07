@@ -30,6 +30,13 @@ const clickStar = (event) => {
     const taskItem = document.getElementById(idToStar);
     taskList.prepend(taskItem);
 
+    const icons = star.parentElement.querySelectorAll('.icon');
+    icons.forEach(icon => {
+        if (!icon.classList.contains('important')) {
+        icon.classList.remove('visible')
+        }
+    });
+
     // sort list items
     const childrenArray = Array.from(taskList.children);
     childrenArray.sort((a, b) => b.classList.contains('important') - a.classList.contains('important'));
@@ -148,9 +155,9 @@ const addTaskToList = (task) => {
     taskItem.innerHTML = `
         <img src='images/unchecked.png' class="checkbox"></img>
         <span class="task-text">${task.text}</span>
-        <img src='images/starEmpty.png' class="star"></img>
-        <img src='images/edit.png' class="edit"></img>
-        <img src='images/trashcan.png' class="trashcan"></img>
+        <img src='images/starEmpty.png' class="star icon"></img>
+        <img src='images/edit.png' class="edit icon"></img>
+        <img src='images/trashcan.png' class="trashcan icon"></img>
     `;
     taskList.appendChild(taskItem);
     
@@ -166,6 +173,18 @@ const addTaskToList = (task) => {
     const trashcan = taskItem.querySelector('.trashcan');
     trashcan.addEventListener('click', deleteTask);
 
+    taskItem.addEventListener('mousemove', () => {
+        edit.classList.add('visible');
+        trashcan.classList.add('visible');
+        star.classList.add('visible');
+    });
+    taskItem.addEventListener('mouseout', () => {
+        edit.classList.remove('visible');
+        trashcan.classList.remove('visible');
+        if (!star.classList.contains('important')) {
+            star.classList.remove('visible');
+        }
+    })
 
     // render checked and important tasks
     if (task.checked) {
@@ -178,10 +197,14 @@ const addTaskToList = (task) => {
     if (task.important) {
         star.src = 'images/starFull.png';
         star.classList.add('important');
+        star.classList.add('visible');
         star.parentElement.classList.add('important');
         taskList.prepend(taskItem); 
     }
+
+
 }
+
 
 const addTask = (event) => {
     event.preventDefault();
@@ -210,6 +233,7 @@ const addTask = (event) => {
 }
 
 const clearCompletedTasks = () => {
+    toggleButton.parentElement.children[1].classList.toggle('active');
     const checkedTasks = document.querySelectorAll('.checked');
     //iterate over each selected element: 
     let itemsArr = JSON.parse(localStorage.getItem("items")); //"items" is the key for local storage
@@ -237,7 +261,6 @@ clearAllButton.addEventListener('click', () => {
 
 clearCompletedButton.addEventListener('click', () => { 
     clearCompletedTasks();
-    toggleButton.parentElement.children[1].classList.toggle('active');
 })
 
 toggleButton.addEventListener('click', () => {
@@ -245,6 +268,7 @@ toggleButton.addEventListener('click', () => {
 });
 
 addButton.addEventListener('click', addTask)
+
 inputField.addEventListener('keydown', () => {
     inputField.parentElement.children[1].classList.add('visible');
 })
