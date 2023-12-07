@@ -26,10 +26,7 @@ const clickStar = (event) => {
     star.classList.toggle('important'); // esto es para darle opacity 1 o 0.5
     star.parentElement.classList.toggle('important');
 
-    // put li element with star on top of the list
-    const taskItem = document.getElementById(idToStar);
-    taskList.prepend(taskItem);
-
+    // toggle visibility of other stars
     const icons = star.parentElement.querySelectorAll('.icon');
     icons.forEach(icon => {
         if (!icon.classList.contains('important')) {
@@ -39,10 +36,9 @@ const clickStar = (event) => {
 
     // sort list items
     const childrenArray = Array.from(taskList.children);
-    childrenArray.sort((a, b) => b.classList.contains('important') - a.classList.contains('important'));
+    childrenArray.sort((a, b) => b.classList.contains('important') - a.classList.contains('important')); // b.classList.contains('important') devuelve true o false, y se resta, si es true, se pone antes, si es false, se pone despues. cuando es true cuando se resta? cuando b es importante, y a no lo es. entonces b va primero. si b no es importante, y a si, entonces b va despues. si b y a son importantes, entonces se restan y da 0, y no se mueven. si b y a no son importantes, entonces se restan y da 0, y no se mueven. 
     childrenArray.forEach(item => taskList.appendChild(item));
 }
-
 
 const editTask = (event) => {
     const spanToEdit = event.target.parentElement.children[1];
@@ -51,7 +47,7 @@ const editTask = (event) => {
     // toggle contenteditable
     if (spanToEdit.getAttribute('contenteditable') === 'true') {
         spanToEdit.setAttribute('contenteditable', false);
-        event.target.src = event.target.src.includes('OK') ? 'images/edit.png' : 'images/editOK.png';
+        event.target.src = 'images/edit.png' // toggle icon
 
         // save new task text to local storage
         const newTaskText = spanToEdit.innerText;
@@ -62,7 +58,7 @@ const editTask = (event) => {
         localStorage.setItem("items", JSON.stringify(itemsArr));
     } else {
         spanToEdit.setAttribute('contenteditable', true);
-        spanToEdit.focus();
+        spanToEdit.focus(); // te mete dentro del span
         // select all text
         let range = document.createRange();
         range.selectNodeContents(spanToEdit);
@@ -71,9 +67,9 @@ const editTask = (event) => {
         sel.addRange(range);
         // end select all text
 
-        event.target.src = event.target.src.includes('OK') ? 'images/edit.png' : 'images/editOK.png'; // toggle icon
+        event.target.src = 'images/editOK.png'; // toggle icon
 
-        //press enter to save
+        // press enter to save
         spanToEdit.addEventListener('keydown', (event) => { 
             if (event.key === 'Enter') {
                 event.preventDefault();
@@ -226,7 +222,7 @@ const addTask = (event) => {
     let itemsArr = localStorage.getItem("items") ? JSON.parse(localStorage.getItem("items")) : [];
     
     itemsArr.push(task);
-    localStorage.setItem("items", JSON.stringify(itemsArr)); // 
+    localStorage.setItem("items", JSON.stringify(itemsArr));
     inputField.value = '';
 
     addTaskToList(task);
@@ -269,6 +265,10 @@ toggleButton.addEventListener('click', () => {
 
 addButton.addEventListener('click', addTask)
 
-inputField.addEventListener('keydown', () => {
+inputField.addEventListener('keydown', (event) => {
     inputField.parentElement.children[1].classList.add('visible');
+    if (event.key === 'Escape') { 
+        inputField.parentElement.children[1].classList.remove('visible');
+        inputField.value = '';
+    }
 })
