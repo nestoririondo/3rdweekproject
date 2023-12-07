@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 html {
-    font-family: 'Caveat', cursive;
+    font-family: 'Architects Daughter';
 }
 body {
     background: rgb(174,238,222);
@@ -32,17 +32,15 @@ body {
 #inputField {
     flex: 5 1 0;
     padding: 1rem 3rem;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     border: none;
     outline: none;
-    font-family: 'Caveat', cursive;
-    overflow: hidden;
+    font-family: 'Architects Daughter', cursive;    overflow: hidden;
 }
 #addButton {
     visibility: hidden;
-    padding: 0 0.4rem 0.3rem 0;
-    font-family: 'Caveat', cursive;
-    font-size: 2rem;
+    padding:;
+    font-family: 'Architects Daughter', cursive;    font-size: 1.7rem;
     height: 3rem;
     flex: 1 1 0;
     background-color: #4CAF50;
@@ -175,8 +173,7 @@ body {
     height: 50px;
     padding: 0.8rem 1rem 1rem 1rem;
     font-size: 1.2rem;
-    font-family: 'Caveat', cursive;
-    background-color: #4CAF50;
+    font-family: 'Architects Daughter', cursive;    background-color: #4CAF50;
     color: white;
     border: none;
     cursor: pointer;
