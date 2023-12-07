@@ -181,6 +181,16 @@ const addTaskToList = (task) => {
         star.parentElement.classList.add('important');
         taskList.prepend(taskItem); 
     }
+
+    taskItem.addEventListener('mousemove', () => {
+        edit.classList.add('visible');
+        trashcan.classList.add('visible');
+    });
+    taskItem.addEventListener('mouseout', () => {
+        edit.classList.remove('visible');
+        trashcan.classList.remove('visible');
+    });
+
 }
 
 const addTask = (event) => {
@@ -210,6 +220,7 @@ const addTask = (event) => {
 }
 
 const clearCompletedTasks = () => {
+    toggleButton.parentElement.children[1].classList.toggle('active');
     const checkedTasks = document.querySelectorAll('.checked');
     //iterate over each selected element: 
     let itemsArr = JSON.parse(localStorage.getItem("items")); //"items" is the key for local storage
@@ -237,7 +248,6 @@ clearAllButton.addEventListener('click', () => {
 
 clearCompletedButton.addEventListener('click', () => { 
     clearCompletedTasks();
-    toggleButton.parentElement.children[1].classList.toggle('active');
 })
 
 toggleButton.addEventListener('click', () => {
@@ -245,6 +255,7 @@ toggleButton.addEventListener('click', () => {
 });
 
 addButton.addEventListener('click', addTask)
+
 inputField.addEventListener('keydown', () => {
     inputField.parentElement.children[1].classList.add('visible');
 })
