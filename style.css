@@ -101,6 +101,7 @@ body {
 }
 
 .star {
+    visibility: hidden;
     width: 20px;
     height: 20px;
     opacity: 0.6;
@@ -110,6 +111,9 @@ body {
 }
 .star:hover {
     opacity: 1;
+}
+.visible {
+    visibility: visible;
 }
 
 .important {
