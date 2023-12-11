@@ -4,6 +4,7 @@ const inputField = document.getElementById('inputField');
 const taskList = document.getElementById('taskList');
 const clearAllButton = document.getElementById('clearAllButton');
 const clearCompletedButton = document.getElementById('clearCompletedButton');
+const toggleButton = document.getElementById('toggle-button');
 
 const clickStar = (event) => {
     const idToStar = event.target.parentElement.id; // tomamos el id (número único ya creado) del padre del img, que es un li
@@ -25,12 +26,22 @@ const clickStar = (event) => {
     // toggle class
     star.classList.toggle('important'); // esto es para darle opacity 1 o 0.5, le das la clase important para que el CSS le de opacidad
 
-    // put li element with star on top of the list
-    
+    star.parentElement.classList.toggle('important');
+
+    // toggle visibility of other stars
+    const icons = star.parentElement.querySelectorAll('.icon');
+    icons.forEach(icon => {
+        if (!icon.classList.contains('important')) {
+        icon.classList.remove('visible')
+        }
+    });
 
 
+    // sort list items
+    const childrenArray = Array.from(taskList.children);
+    childrenArray.sort((a, b) => b.classList.contains('important') - a.classList.contains('important')); // b.classList.contains('important') devuelve true o false, y se resta, si es true, se pone antes, si es false, se pone despues. cuando es true cuando se resta? cuando b es importante, y a no lo es. entonces b va primero. si b no es importante, y a si, entonces b va despues. si b y a son importantes, entonces se restan y da 0, y no se mueven. si b y a no son importantes, entonces se restan y da 0, y no se mueven. 
+    childrenArray.forEach(item => taskList.appendChild(item));
 }
-
 
 const editTask = (event) => {
     const spanToEdit = event.target.parentElement.children[1]; // al hacer click en el target llama al padre del target (li) y busca el hijo 1 (span) (segundo hijo)
@@ -39,7 +50,7 @@ const editTask = (event) => {
     // toggle contenteditable
     if (spanToEdit.getAttribute('contenteditable') === 'true') {
         spanToEdit.setAttribute('contenteditable', false);
-        event.target.src = event.target.src.includes('OK') ? 'images/edit.png' : 'images/editOK.png';
+        event.target.src = 'images/edit.png' // toggle icon
 
         // save new task text to local storage
         const newTaskText = spanToEdit.innerText;
@@ -50,7 +61,7 @@ const editTask = (event) => {
         localStorage.setItem("items", JSON.stringify(itemsArr));
     } else {
         spanToEdit.setAttribute('contenteditable', true);
-        spanToEdit.focus();
+        spanToEdit.focus(); // te mete dentro del span
         // select all text
         let range = document.createRange();
         range.selectNodeContents(spanToEdit);
@@ -59,9 +70,9 @@ const editTask = (event) => {
         sel.addRange(range);
         // end select all text
 
-        event.target.src = event.target.src.includes('OK') ? 'images/edit.png' : 'images/editOK.png'; // toggle icon
+        event.target.src = 'images/editOK.png'; // toggle icon
 
-        //press enter to save
+        // press enter to save
         spanToEdit.addEventListener('keydown', (event) => { 
             if (event.key === 'Enter') {
                 event.preventDefault();
@@ -134,16 +145,7 @@ const completeTask = (event) => {
     const checkbox = document.getElementById(idToComplete).querySelector('.checkbox');
 
     checkbox.src = checkbox.src.includes('unchecked') ? 'images/checked.png' : 'images/unchecked.png';
-
-    // if (checkbox.src.includes('unchecked')) {
-    //     checkbox.src = 'images/checked.png';
-    // } else {
-    //     checkbox.src = 'images/unchecked.png';
-    // }
-
-    // document.getElementById(idToComplete).classList.toggle('checked');
 }
-
 
 const addTaskToList = (task) => {
     const taskItem = document.createElement('li'); // <li class='taskItem'></li>
@@ -152,10 +154,10 @@ const addTaskToList = (task) => {
     taskItem.innerHTML = `
         <img src='images/unchecked.png' class="checkbox"></img>
         <span class="task-text">${task.text}</span>
-        <img src='images/starEmpty.png' class="star"></img> 
-        <img src='images/edit.png' class="edit"></img>
-        <img src='images/trashcan.png' class="trashcan"></img>
-    `;
+        <img src='images/starEmpty.png' class="star icon"></img>
+        <img src='images/edit.png' class="edit icon"></img>
+        <img src='images/trashcan.png' class="trashcan icon"></img>`;
+  
     taskList.appendChild(taskItem);
     
     const checkbox = taskItem.querySelector('.checkbox');
@@ -170,6 +172,20 @@ const addTaskToList = (task) => {
     const trashcan = taskItem.querySelector('.trashcan');
     trashcan.addEventListener('click', deleteTask);
 
+    taskItem.addEventListener('mousemove', () => {
+        edit.classList.add('visible');
+        trashcan.classList.add('visible');
+        star.classList.add('visible');
+    });
+    taskItem.addEventListener('mouseout', () => {
+        edit.classList.remove('visible');
+        trashcan.classList.remove('visible');
+        if (!star.classList.contains('important')) {
+            star.classList.remove('visible');
+        }
+    })
+
+    // render checked and important tasks
     if (task.checked) {
         taskItem.classList.add('checked');
         checkbox.src = 'images/checked.png';
@@ -179,12 +195,20 @@ const addTaskToList = (task) => {
 
     if (task.important) {
         star.src = 'images/starFull.png';
-        star.classList.add('important'); // al elemento star dale la clase "important"
+
+        star.classList.add('important'); al elemento star dale la clase "important"
+        star.classList.add('visible');
+        star.parentElement.classList.add('important');
+        taskList.prepend(taskItem); 
     }
+
+
 }
+
 
 const addTask = (event) => {
     event.preventDefault();
+    inputField.parentElement.children[1].classList.remove('visible');
 
     const taskText = inputField.value;
     if (taskText.trim() === '') {
@@ -202,11 +226,23 @@ const addTask = (event) => {
     let itemsArr = localStorage.getItem("items") ? JSON.parse(localStorage.getItem("items")) : [];
     
     itemsArr.push(task);
-    localStorage.setItem("items", JSON.stringify(itemsArr)); // 
+    localStorage.setItem("items", JSON.stringify(itemsArr));
     inputField.value = '';
 
     addTaskToList(task);
 }
+
+const clearCompletedTasks = () => {
+    toggleButton.parentElement.children[1].classList.toggle('active');
+    const checkedTasks = document.querySelectorAll('.checked');
+    //iterate over each selected element: 
+    let itemsArr = JSON.parse(localStorage.getItem("items")); //"items" is the key for local storage
+    itemsArr = itemsArr.filter(item => item.checked === false); //filter items to remove the one with the id we want to delete
+    localStorage.setItem("items", JSON.stringify(itemsArr)); //save the remaining items to local storage
+    checkedTasks.forEach(task => task.remove());
+};
+
+// render tasks from local storage
 
 if (localStorage.getItem("items")) {
     const items = JSON.parse(localStorage.getItem("items"));
@@ -215,23 +251,28 @@ if (localStorage.getItem("items")) {
     });
 }
 
-addButton.addEventListener('click', addTask);
+// event listeners
 
 clearAllButton.addEventListener('click', () => {
     localStorage.clear();
     taskList.innerHTML = '';
+    toggleButton.parentElement.children[1].classList.toggle('active');
+});
+
+clearCompletedButton.addEventListener('click', () => { 
+    clearCompletedTasks();
 })
 
-//here comes the clear all completed tasks button and its functions
+toggleButton.addEventListener('click', () => {
+    toggleButton.parentElement.children[1].classList.toggle('active');
+});
 
-const clearCompletedTasks = () => {
-    const checkedTasks = document.querySelectorAll('.checked');
-    //iterate over each selected element: 
-    let itemsArr = JSON.parse(localStorage.getItem("items")); //"items" is the key for local storage
-    itemsArr = itemsArr.filter(item => item.checked === false); //filter items to remove the one with the id we want to delete
-    localStorage.setItem("items", JSON.stringify(itemsArr)); //save the remaining items to local storage
-    checkedTasks.forEach( task => task.remove())    
-    
-};
+addButton.addEventListener('click', addTask)
 
-clearCompletedButton.addEventListener('click', clearCompletedTasks);
+inputField.addEventListener('keydown', (event) => {
+    inputField.parentElement.children[1].classList.add('visible');
+    if (event.key === 'Escape') { 
+        inputField.parentElement.children[1].classList.remove('visible');
+        inputField.value = '';
+    }
+})

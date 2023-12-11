@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 html {
-    font-family: 'Caveat', cursive;
+    font-family: 'Architects Daughter';
 }
 body {
     background: rgb(174,238,222);
@@ -32,16 +32,15 @@ body {
 #inputField {
     flex: 5 1 0;
     padding: 1rem 3rem;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     border: none;
     outline: none;
-    font-family: 'Caveat', cursive;
-    overflow: hidden;
+    font-family: 'Architects Daughter', cursive;    overflow: hidden;
 }
 #addButton {
-    padding: 0 0.4rem 0.3rem 0;
-    font-family: 'Caveat', cursive;
-    font-size: 2rem;
+    visibility: hidden;
+    padding:;
+    font-family: 'Architects Daughter', cursive;    font-size: 1.7rem;
     height: 3rem;
     flex: 1 1 0;
     background-color: #4CAF50;
@@ -50,15 +49,18 @@ body {
     cursor: pointer;
     border-radius: 5px;
 }
+#addButton.visible {
+    visibility: visible;
+}
 #addButton:hover {
     background-color: #45a049;
 }
 #addButton:active {
     background-color: #3e8e41;
-    transform: scale()
+    transform: scale(0.98);
 }
 
-li {
+.taskItem {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -67,16 +69,16 @@ li {
     list-style-type: none;
     border-bottom: 1px solid black;
 }
-li:last-child {
+.taskItem:last-child {
     border-bottom: none;
 }
 
-li span {
+.taskItem span {
     flex: 5;
     word-break: break-all;
 }
 
-li span:focus {
+.taskItem span:focus {
     outline: 1px solid grey;
 }
 .completed {
@@ -97,6 +99,7 @@ li span:focus {
 }
 
 .star {
+    visibility: hidden;
     width: 20px;
     height: 20px;
     opacity: 0.6;
@@ -107,11 +110,15 @@ li span:focus {
 .star:hover {
     opacity: 1;
 }
+.visible {
+    visibility: visible;
+}
 
 .important { 
     opacity:1;
 }
 .edit {
+    visibility: hidden; 
     width: 17px;
     opacity: 0.6;
     cursor: pointer;
@@ -121,6 +128,7 @@ li span:focus {
     opacity: 1;
 }
 .trashcan {
+    visibility: hidden;
     width: 17px;
     height: 17px;
     opacity: 0.6;
@@ -129,4 +137,60 @@ li span:focus {
 }
 .trashcan:hover {
     opacity: 1;
+}
+.visible {
+    visibility: visible;
+}
+.extramenu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hamburger {
+    width: 30px;
+    height: 40px;
+    opacity: 0.4;
+    margin-bottom: 1rem;
+    &:hover {
+        opacity: 1;
+    }
+    &:active {  
+        transform: scale(0.98);
+    }
+}
+
+.secondcontainer {
+    display: none;
+    margin: 0 auto;
+    gap: 1rem;
+    flex-direction: column;
+    padding-bottom: 2rem;
+}
+
+.secondcontainer button {
+    display: block;
+    height: 50px;
+    padding: 0.8rem 1rem 1rem 1rem;
+    font-size: 1.2rem;
+    font-family: 'Architects Daughter', cursive;    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    white-space: nowrap;
+    &:hover {
+        background-color: #45a049;
+    }
+    &:active {  
+        background-color: #3e8e41;
+        transform: scale(0.98);
+    }
+}
+#clearAllButton:hover {
+    background-color: darkred;
+}
+
+.secondcontainer.active {
+    display: flex;
 }

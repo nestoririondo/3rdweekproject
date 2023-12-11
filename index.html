@@ -7,21 +7,29 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✅</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
     <title> Things to do</title>
 </head>
 <body>
     <div class="outer">
-    <div class="container">
-        <form action="" id="form">
-            <input id='inputField' type="text" placeholder='add your task' autofocus >
-            <button id="addButton">+</button>
-        </form>
-        <ul id="taskList"></ul>
+        <div class="container">
+            <form action="" id="form">
+                <input id='inputField' type="text" placeholder='add task...' autofocus>
+                <button id="addButton">+</button>
+            </form>
+            <ul id="taskList"></ul>
+        </div>
     </div>
+    <div class="extramenu">
+        <a href="#" class="toggle-button" id="toggle-button">
+            <img src="images/hamburger.png" class="hamburger" id="hamburger">
+        </a>
+        <div class="secondcontainer">
+            <button id="clearCompletedButton">Clear completed</button>
+            <button id="clearAllButton">Delete all</button>
+        </div>
     </div>
-    <button id="clearAllButton">clear all</button>
-    <button id="clearCompletedButton">Clear all completed tasks</button>
+    
     <script src="app.js"></script>
 </body>
 </html>
