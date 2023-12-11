@@ -7,23 +7,25 @@ const clearCompletedButton = document.getElementById('clearCompletedButton');
 const toggleButton = document.getElementById('toggle-button');
 
 const clickStar = (event) => {
-    const idToStar = event.target.parentElement.id; // tomamos el id del padre del img, que es un li
+    const idToStar = event.target.parentElement.id; // tomamos el id (número único ya creado) del padre del img, que es un li
 
     let items = JSON.parse(localStorage.getItem("items"));
-    // find the index of the item we want to update
+    // find the index of the item we want to update, which is the one that matches parentElement.id
     const index = items.findIndex(item => item.id == idToStar);
-    // update the item
-    items[index].important = !items[index].important; // if it's true, make it false, if it's false, make it true\
+    // update the item. 
+    //All the items with id = paternElement.id and class imporntant = true will be updated to false and viceversa
+    items[index].important = !items[index].important; // if it's true, make it false, if it's false, make it true. 
 
     // save the updated items to local storage
     localStorage.setItem("items", JSON.stringify(items));
 
-    // toggle icon
-    const star = document.getElementById(idToStar).querySelector('.star');
+    // toggle icon. Find the star element and change the image by changing the src attribute (?) if/esle
+    const star = document.getElementById(idToStar).querySelector('.star'); 
     star.src = star.src.includes('starEmpty') ? 'images/starFull.png' : 'images/starEmpty.png';
 
     // toggle class
-    star.classList.toggle('important'); // esto es para darle opacity 1 o 0.5
+    star.classList.toggle('important'); // esto es para darle opacity 1 o 0.5, le das la clase important para que el CSS le de opacidad
+
     star.parentElement.classList.toggle('important');
 
     // toggle visibility of other stars
@@ -34,6 +36,7 @@ const clickStar = (event) => {
         }
     });
 
+
     // sort list items
     const childrenArray = Array.from(taskList.children);
     childrenArray.sort((a, b) => b.classList.contains('important') - a.classList.contains('important')); // b.classList.contains('important') devuelve true o false, y se resta, si es true, se pone antes, si es false, se pone despues. cuando es true cuando se resta? cuando b es importante, y a no lo es. entonces b va primero. si b no es importante, y a si, entonces b va despues. si b y a son importantes, entonces se restan y da 0, y no se mueven. si b y a no son importantes, entonces se restan y da 0, y no se mueven. 
@@ -41,7 +44,7 @@ const clickStar = (event) => {
 }
 
 const editTask = (event) => {
-    const spanToEdit = event.target.parentElement.children[1];
+    const spanToEdit = event.target.parentElement.children[1]; // al hacer click en el target llama al padre del target (li) y busca el hijo 1 (span) (segundo hijo)
     const originalText = spanToEdit.innerHTML
     
     // toggle contenteditable
@@ -153,8 +156,8 @@ const addTaskToList = (task) => {
         <span class="task-text">${task.text}</span>
         <img src='images/starEmpty.png' class="star icon"></img>
         <img src='images/edit.png' class="edit icon"></img>
-        <img src='images/trashcan.png' class="trashcan icon"></img>
-    `;
+        <img src='images/trashcan.png' class="trashcan icon"></img>`;
+  
     taskList.appendChild(taskItem);
     
     const checkbox = taskItem.querySelector('.checkbox');
@@ -192,7 +195,8 @@ const addTaskToList = (task) => {
 
     if (task.important) {
         star.src = 'images/starFull.png';
-        star.classList.add('important');
+
+        star.classList.add('important'); al elemento star dale la clase "important"
         star.classList.add('visible');
         star.parentElement.classList.add('important');
         taskList.prepend(taskItem); 
