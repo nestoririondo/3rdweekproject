@@ -6,23 +6,24 @@ const clearAllButton = document.getElementById('clearAllButton');
 const clearCompletedButton = document.getElementById('clearCompletedButton');
 
 const clickStar = (event) => {
-    const idToStar = event.target.parentElement.id; // tomamos el id del padre del img, que es un li
+    const idToStar = event.target.parentElement.id; // tomamos el id (número único ya creado) del padre del img, que es un li
 
     let items = JSON.parse(localStorage.getItem("items"));
-    // find the index of the item we want to update
+    // find the index of the item we want to update, which is the one that matches parentElement.id
     const index = items.findIndex(item => item.id == idToStar);
-    // update the item
-    items[index].important = !items[index].important; // if it's true, make it false, if it's false, make it true\
+    // update the item. 
+    //All the items with id = paternElement.id and class imporntant = true will be updated to false and viceversa
+    items[index].important = !items[index].important; // if it's true, make it false, if it's false, make it true. 
 
     // save the updated items to local storage
     localStorage.setItem("items", JSON.stringify(items));
 
-    // toggle icon
-    const star = document.getElementById(idToStar).querySelector('.star');
+    // toggle icon. Find the star element and change the image by changing the src attribute (?) if/esle
+    const star = document.getElementById(idToStar).querySelector('.star'); 
     star.src = star.src.includes('starEmpty') ? 'images/starFull.png' : 'images/starEmpty.png';
 
     // toggle class
-    star.classList.toggle('important'); // esto es para darle opacity 1 o 0.5
+    star.classList.toggle('important'); // esto es para darle opacity 1 o 0.5, le das la clase important para que el CSS le de opacidad
 
     // put li element with star on top of the list
     
@@ -32,7 +33,7 @@ const clickStar = (event) => {
 
 
 const editTask = (event) => {
-    const spanToEdit = event.target.parentElement.children[1];
+    const spanToEdit = event.target.parentElement.children[1]; // al hacer click en el target llama al padre del target (li) y busca el hijo 1 (span) (segundo hijo)
     const originalText = spanToEdit.innerHTML
     
     // toggle contenteditable
@@ -151,7 +152,7 @@ const addTaskToList = (task) => {
     taskItem.innerHTML = `
         <img src='images/unchecked.png' class="checkbox"></img>
         <span class="task-text">${task.text}</span>
-        <img src='images/starEmpty.png' class="star"></img>
+        <img src='images/starEmpty.png' class="star"></img> 
         <img src='images/edit.png' class="edit"></img>
         <img src='images/trashcan.png' class="trashcan"></img>
     `;
@@ -178,7 +179,7 @@ const addTaskToList = (task) => {
 
     if (task.important) {
         star.src = 'images/starFull.png';
-        star.classList.add('important');
+        star.classList.add('important'); // al elemento star dale la clase "important"
     }
 }
 
