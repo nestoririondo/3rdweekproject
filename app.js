@@ -196,7 +196,7 @@ const addTaskToList = (task) => {
     if (task.important) {
         star.src = 'images/starFull.png';
 
-        star.classList.add('important'); al elemento star dale la clase "important"
+        star.classList.add('important'); // al elemento star dale la clase "important"
         star.classList.add('visible');
         star.parentElement.classList.add('important');
         taskList.prepend(taskItem); 
